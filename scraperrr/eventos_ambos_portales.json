@@ -1,0 +1,776 @@
+[
+  {
+    "evento": "Jose Carreras - Tour de Despedida",
+    "recinto": "Gran Arena Monticello",
+    "fecha": "3 de octubre",
+    "url_evento": "https://www.ticketmaster.cl/event/746-jose-carreras-gran-arena-monticello",
+    "imagen_url": "https://cdn.getcrowder.com/images/a5a8b152-72ea-4161-9007-06167970af2e-640x640.jpg",
+    "latitud": -33.9933,
+    "longitud": -70.7011
+  },
+  {
+    "evento": "La Sociedad",
+    "recinto": "No especificado",
+    "fecha": "No especificado",
+    "url_evento": "https://www.ticketmaster.cl/event/la-sociedad-dreams-temuco",
+    "imagen_url": "https://cdn.getcrowder.com/images/7e06ab73-e688-43fb-b0cb-a460189d7e0d-3.jpg",
+    "latitud": null,
+    "longitud": null
+  },
+  {
+    "evento": "Minecraft Experience",
+    "recinto": "Parque Metropolitano, Avenida El Cerro 1905, Santiago, Chile",
+    "fecha": "8 de octubre de 2026",
+    "url_evento": "https://www.ticketmaster.cl/event/minecraft-experience-chile",
+    "imagen_url": "https://cdn.getcrowder.com/images/4ac8f80a-0cce-4307-a52f-e33dac2242f8-640x640minecraft.png",
+    "latitud": null,
+    "longitud": null
+  },
+  {
+    "evento": "Splash Experience Carnaval",
+    "recinto": "No especificado",
+    "fecha": "No especificado",
+    "url_evento": "https://www.ticketmaster.cl/event/splash-experience-carnaval-color-splash",
+    "imagen_url": "https://cdn.getcrowder.com/images/ed2ede3b-55c6-42ad-9564-c989b6af04e3-carnaval640x640.png",
+    "latitud": null,
+    "longitud": null
+  },
+  {
+    "evento": "Club Deportivo Palestino vs Universidad de Concepción",
+    "recinto": "Estadio Municipal de la Cisterna",
+    "fecha": "No especificado",
+    "url_evento": "https://www.ticketmaster.cl/event/club-deportivo-palestino-vs-universidad-de-concepcion-liga-de-primera-mercado-libre-estadio-municipal-de-la-cisterna",
+    "imagen_url": "https://cdn.getcrowder.com/images/c461d6a5-b21e-4f0b-979a-84db3d230fd2-640x640web.png",
+    "latitud": null,
+    "longitud": null
+  },
+  {
+    "evento": "Movimiento Original - 20 Años",
+    "recinto": "Estadio Bicentenario",
+    "fecha": "Sábado 20 de Diciembre 2025",
+    "url_evento": "https://www.ticketmaster.cl/event/movimiento-original-estadio-bicentenario-la-florida",
+    "imagen_url": "https://cdn.getcrowder.com/images/1ebc1430-9bec-4035-85b3-f828d69fd142-640x640movoriginaljulio.png",
+    "latitud": -38.7427192,
+    "longitud": -72.6197041
+  },
+  {
+    "evento": "Foo Fighters - Take Cover Tour 2027",
+    "recinto": "Parque Estadio Nacional de Santiago de Chile",
+    "fecha": "28 de febrero 2027",
+    "url_evento": "https://www.ticketmaster.cl/event/foo-fighters-live-2027-scl",
+    "imagen_url": "https://cdn.getcrowder.com/images/0390ae9c-5975-4ab1-9e67-88fe4d04a982-640x640foofighetrs.png",
+    "latitud": -33.4643,
+    "longitud": -70.6062
+  },
+  {
+    "evento": "Empieza con D, siete letras",
+    "recinto": "Teatro Mori",
+    "fecha": "No especificado",
+    "url_evento": "https://www.ticketmaster.cl/event/empieza-con-d-siete-letras-teatro-mori-vitacura",
+    "imagen_url": "https://cdn.getcrowder.com/images/e4643643-fb6c-4bef-abe1-0b357366dfa5-empiezacond-640x640-web-mori-junio.png",
+    "latitud": -33.4324397,
+    "longitud": -70.6346735
+  },
+  {
+    "evento": "Ed Sheeran Loop Tour",
+    "recinto": "Estadio Bicentenario La Florida",
+    "fecha": "21 de noviembre de 2026",
+    "url_evento": "https://www.ticketmaster.cl/event/ed-sheeran-loop-tour-2026-scl",
+    "imagen_url": "https://cdn.getcrowder.com/images/f796a682-0998-41fd-a275-a170137bd6a6-640x640webedsheeran2dafecha.png",
+    "latitud": -33.5358,
+    "longitud": -70.5786
+  },
+  {
+    "evento": "Robbie Williams - Britpop World Tour",
+    "recinto": "Estadio Bicentenario de La Florida",
+    "fecha": "27 de septiembre de 2026",
+    "url_evento": "https://www.ticketmaster.cl/event/robbie-williams-2026",
+    "imagen_url": "https://cdn.getcrowder.com/images/e8eee2b5-41b5-4763-9f2e-cc877ca2e8ef-640x640robbiewilliams.jpg",
+    "latitud": -33.5408024,
+    "longitud": -70.578182
+  },
+  {
+    "evento": "ABBA Sinfónico",
+    "recinto": "Metropolitan Santiago Convention & Event Center",
+    "fecha": "Viernes 16 de octubre 2023",
+    "url_evento": "https://www.ticketmaster.cl/event/abba-sinfonico-casa-piedra",
+    "imagen_url": "https://cdn.getcrowder.com/images/0f64f739-2ceb-4cc9-8cc9-11f565a82427-abba640x640.jpg",
+    "latitud": -33.3986,
+    "longitud": -70.5489
+  },
+  {
+    "evento": "Iron Maiden - Run For Your Lives World Tour 2026",
+    "recinto": "Estadio Nacional",
+    "fecha": "31 de octubre 2026 – 1 de Noviembre 2026",
+    "url_evento": "https://www.ticketmaster.cl/event/iron-maiden-run-for-your-lives-scl-2026",
+    "imagen_url": "https://cdn.getcrowder.com/images/ef74f57a-eba0-45d7-9f2b-b668e6249372-640x640iron-maiden.png",
+    "latitud": -33.4643,
+    "longitud": -70.6062
+  },
+  {
+    "evento": "Los Autenticos Decadentes",
+    "recinto": "Gran Arena Monticello",
+    "fecha": "Viernes 4 de septiembre 2023",
+    "url_evento": "https://www.ticketmaster.cl/event/los-autenticos-decadentes-gran-aren-monticello",
+    "imagen_url": "https://cdn.getcrowder.com/images/6fe5d53d-62f9-44c2-911e-9cfd0c8185fa-640x640losautenticos.jpg",
+    "latitud": -33.9933,
+    "longitud": -70.7011
+  },
+  {
+    "evento": "Country Road Sessions",
+    "recinto": "Metropolitan Santiago",
+    "fecha": "No especificado",
+    "url_evento": "https://www.ticketmaster.cl/event/country-road-sessions-metropolitan-santiago",
+    "imagen_url": "https://cdn.getcrowder.com/images/23f441c3-1202-4b74-807d-19723cf01827-imagen-640x640.png",
+    "latitud": -33.3986,
+    "longitud": -70.5489
+  },
+  {
+    "evento": "Buena Vista Social Club: El Legado",
+    "recinto": "El Teatro y el Centro Cultural San Gines",
+    "fecha": "No especificado",
+    "url_evento": "https://www.ticketmaster.cl/event/buena-vista-social-club-el-legado-centro-cultural-san-gines",
+    "imagen_url": "https://cdn.getcrowder.com/images/e3fd8319-bec5-4397-9592-ea20ffb13cdc-640x640-sinfecha-web-buenavistasocialclub-ellegado.png",
+    "latitud": null,
+    "longitud": null
+  },
+  {
+    "evento": "Easykid Live",
+    "recinto": "Estadio Bicentenario de La Florida",
+    "fecha": "14 de noviembre de 2026",
+    "url_evento": "https://www.ticketmaster.cl/event/easykid-live-2026-scl",
+    "imagen_url": "https://cdn.getcrowder.com/images/0ffdf4a2-5480-4413-8330-daaf91650c95-640x640easykid.png",
+    "latitud": -33.5408024,
+    "longitud": -70.578182
+  },
+  {
+    "evento": "No especificado",
+    "recinto": "No especificado",
+    "fecha": "No especificado",
+    "url_evento": "https://www.ticketmaster.cl/event/ciclo-de-cine-chileno-teatro-oriente",
+    "imagen_url": "https://cdn.getcrowder.com/images/68a76af7-81e5-444b-b5a1-12e2d7c41feb-ticketmasterciclo-cine-chileno640x640-copia.png",
+    "latitud": null,
+    "longitud": null
+  },
+  {
+    "evento": "Club Deportes La Serena vs Ñublense",
+    "recinto": "Estadio La Portada",
+    "fecha": "6 de septiembre de 2023",
+    "url_evento": "https://www.ticketmaster.cl/event/club-deportes-la-serena-vs-nublense-liga-de-primera-mercado-libre",
+    "imagen_url": "https://cdn.getcrowder.com/images/c09005bf-13ac-4427-96fd-c13c3aa35250-640x640web.png",
+    "latitud": -29.9110726,
+    "longitud": -71.2519218
+  },
+  {
+    "evento": "Show de Motores",
+    "recinto": "Gran Casino Monticello",
+    "fecha": "27 de Septiembre 2023",
+    "url_evento": "https://www.ticketmaster.cl/event/show-de-motores-gran-arena-monticello",
+    "imagen_url": "https://cdn.getcrowder.com/images/e5787c91-1f81-40af-8fb6-210c4752d3e9-640x640.jpg",
+    "latitud": null,
+    "longitud": null
+  },
+  {
+    "evento": "Tengo Miedo Torero",
+    "recinto": "Teatro Nescafé de las Artes",
+    "fecha": "Miércoles 2 de septiembre",
+    "url_evento": "https://www.ticketmaster.cl/event/tengo-miedo-torero-teatro-nescafe-de-las-artes",
+    "imagen_url": "https://cdn.getcrowder.com/images/f2799dcc-c64b-4421-8309-a1b9d0348f17-tmtengo-miedo-torero640x640.jpg",
+    "latitud": -33.4285417,
+    "longitud": -70.620865
+  },
+  {
+    "evento": "Slayer",
+    "recinto": "Estadio Santa Laura",
+    "fecha": "10 de diciembre 2026",
+    "url_evento": "https://www.ticketmaster.cl/event/slayer-2026",
+    "imagen_url": "https://cdn.getcrowder.com/images/3a23b0a7-c39a-42a2-8ecf-3c0cb706ca64-640x640slayerweb.jpg",
+    "latitud": -33.4047,
+    "longitud": -70.6586
+  },
+  {
+    "evento": "El Se Quemara",
+    "recinto": "Teatro San Ginés",
+    "fecha": "No especificado",
+    "url_evento": "https://www.ticketmaster.cl/event/el-se-quemara-teatro-san-gines",
+    "imagen_url": "https://cdn.getcrowder.com/images/fc04437f-227b-4171-9272-6b854a97238a-entrada.png",
+    "latitud": -33.4327583,
+    "longitud": -70.6336128
+  },
+  {
+    "evento": "Americas Rugby Championship 2026",
+    "recinto": "Chile",
+    "fecha": "29 de agosto al 6 de septiembre de 2026",
+    "url_evento": "https://www.ticketmaster.cl/event/americas-rugby-championship-2026",
+    "imagen_url": "https://cdn.getcrowder.com/images/6e7d9f25-2834-48fd-a9c5-762d1c226ec3-640x640homeweb.png",
+    "latitud": -33.4376995,
+    "longitud": -70.6510671
+  },
+  {
+    "evento": "18 Fest - Nocturno",
+    "recinto": "No especificado",
+    "fecha": "18 de septiembre",
+    "url_evento": "https://www.ticketmaster.cl/event/18-fest-dreams-temuco",
+    "imagen_url": "https://cdn.getcrowder.com/images/a13d1c55-a171-40df-9b04-66bdb4d70ddc-whatsapp-image-2026-08-24-at-4.58.16-pm.jpeg",
+    "latitud": null,
+    "longitud": null
+  },
+  {
+    "evento": "La Sole - Picante Pero Feliz",
+    "recinto": "Teatro NESCAFÉ de las Artes",
+    "fecha": "No especificado",
+    "url_evento": "https://www.ticketmaster.cl/event/488-la-sole-picante-pero-feliz",
+    "imagen_url": "https://cdn.getcrowder.com/images/4a256c9c-309f-472d-8179-8829a992797e-640x640.png",
+    "latitud": -33.4285417,
+    "longitud": -70.620865
+  },
+  {
+    "evento": "Festival Bamba",
+    "recinto": "Parque O'Higgins",
+    "fecha": "No especificado",
+    "url_evento": "https://www.ticketmaster.cl/event/festival-bamba-2026",
+    "imagen_url": "https://cdn.getcrowder.com/images/e8407b49-31be-4c29-9fcf-82fdf54d0c92-bamba-2026ticketmaster640x640-1.jpg",
+    "latitud": -33.4658,
+    "longitud": -70.6601
+  },
+  {
+    "evento": "DANIEL HABIF GIRA \"ASCENDER EL PASO FINAL\"",
+    "recinto": "Metropolitan Santiago",
+    "fecha": "No especificado",
+    "url_evento": "https://www.ticketmaster.cl/event/daniel-habif-gira-ascender-el-paso-final-metropolitan-santiago",
+    "imagen_url": "https://cdn.getcrowder.com/images/684a7c0e-1c2f-4d7d-8472-866e9089775f-640x640webthewhitebox.png",
+    "latitud": -33.3986,
+    "longitud": -70.5489
+  },
+  {
+    "evento": "Lollapalooza Chile 2027",
+    "recinto": "Parque O'Higgins",
+    "fecha": "No especificado",
+    "url_evento": "https://www.ticketmaster.cl/event/lollapalooza-chile-2027",
+    "imagen_url": "https://cdn.getcrowder.com/images/0cb3d4c2-af3d-4989-8709-7b9b9bfba497-640x640-web-lollacl27.jpg",
+    "latitud": -33.4658,
+    "longitud": -70.6601
+  },
+  {
+    "evento": "Expo Bebé",
+    "recinto": "Jardines Metropolitan Santiago",
+    "fecha": "20 al 22 de noviembre de 2026",
+    "url_evento": "https://www.ticketmaster.cl/event/expo-bebe-2026",
+    "imagen_url": "https://cdn.getcrowder.com/images/4d6e5ffc-ec79-42bd-bb6c-0fc1fb91d52b-banners-640x640.jpg.jpeg",
+    "latitud": -33.3986,
+    "longitud": -70.5489
+  },
+  {
+    "evento": "Los Huasos de Algarrobal - 60 Años de Canto",
+    "recinto": "No especificado",
+    "fecha": "No especificado",
+    "url_evento": "https://www.ticketmaster.cl/event/los-huasos-de-algarrobal-60-aniversario-de-canto-teatro-oriente",
+    "imagen_url": "https://cdn.getcrowder.com/images/91ebf211-f451-420c-8c20-05af75e29de9-640x640algarrobal.png",
+    "latitud": null,
+    "longitud": null
+  },
+  {
+    "evento": "XI Tryout Nacional Btalentstar",
+    "recinto": "Cancha El Mirador, Puerto Varas",
+    "fecha": "24 de Octubre 2023",
+    "url_evento": "https://www.ticketmaster.cl/event/xi-tryout-nacional-btalentstar-cancha-el-mirador-puerto-varas",
+    "imagen_url": "https://cdn.getcrowder.com/images/0e13bbec-a491-43b8-a112-ca9390df2edc-640x640tryout.png",
+    "latitud": -41.3432584,
+    "longitud": -72.9795474
+  },
+  {
+    "evento": "Puerto Amores",
+    "recinto": "Teatro Mori",
+    "fecha": "No especificado",
+    "url_evento": "https://www.ticketmaster.cl/event/puerto-amores-teatro-mori-recoleta",
+    "imagen_url": "https://cdn.getcrowder.com/images/b6685dad-362f-489b-90b0-93287d9ebd08-puertodeamores-640x640-web-mori-agosto.png",
+    "latitud": -33.4324397,
+    "longitud": -70.6346735
+  },
+  {
+    "evento": "18 Fest - Diurno",
+    "recinto": "Centro de Eventos Dreams Temuco",
+    "fecha": "18 de septiembre 2023",
+    "url_evento": "https://www.ticketmaster.cl/event/fest-actividad-para-toda-la-vida-hotel-dreams-temuco",
+    "imagen_url": "https://cdn.getcrowder.com/images/2cd35b76-3d60-4b1a-98df-41c50e202d64-whatsapp-image-2026-08-24-at-4.58.18-pm.jpeg",
+    "latitud": -38.7327992,
+    "longitud": -72.6151766
+  },
+  {
+    "evento": "Harlem Globetrotters",
+    "recinto": "Gran Arena Monticello",
+    "fecha": "24 de octubre 2021 y 25 de octubre 2021",
+    "url_evento": "https://www.ticketmaster.cl/event/harlem-globetrotters-gran-arena-monticello",
+    "imagen_url": "https://cdn.getcrowder.com/images/efa15ecb-377e-4749-a0ad-a96e1bc73f0c-640x640harlem-globetrotters.jpg",
+    "latitud": -33.9933,
+    "longitud": -70.7011
+  },
+  {
+    "evento": "Druk",
+    "recinto": "Parque Arauco",
+    "fecha": "No especificado",
+    "url_evento": "https://www.ticketmaster.cl/event/292-druk-teatro-mori-parque-arauco",
+    "imagen_url": "https://cdn.getcrowder.com/images/f80eb2bb-c16b-404a-8df5-740f729939e0-drunk-640x640-web-mori-julio.png",
+    "latitud": -33.468977,
+    "longitud": -70.6699848
+  },
+  {
+    "evento": "Oktoberfest",
+    "recinto": "Centro de Eventos Munich Malloco",
+    "fecha": "9, 10 y 11 de octubre de 2026",
+    "url_evento": "https://www.puntoticket.com/oktoberfest-2026",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/fex013_rs.jpg",
+    "latitud": null,
+    "longitud": null
+  },
+  {
+    "evento": "A Perfect Circle + Puscifer",
+    "recinto": "Hipódromo",
+    "fecha": "29 de noviembre 2026",
+    "url_evento": "https://www.puntoticket.com/aperfectcircle-puscifer",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/cco104_rs.jpg",
+    "latitud": -33.4041507,
+    "longitud": -70.6664968
+  },
+  {
+    "evento": "La Gran Fonda Aconcagua",
+    "recinto": "Palacio Hacienda Quilpué, San Felipe",
+    "fecha": "17 al 20 de septiembre de 2026",
+    "url_evento": "https://www.puntoticket.com/la-gran-fonda-aconcagua-2026",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/ive004_rs.jpg",
+    "latitud": null,
+    "longitud": null
+  },
+  {
+    "evento": "Anuel AA World Tour",
+    "recinto": "Movistar Arena",
+    "fecha": "13, 14, 18 y 19 de diciembre 2026",
+    "url_evento": "https://www.puntoticket.com/anuel-aa-world-tour",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/jts123_rs.jpg",
+    "latitud": -33.4625,
+    "longitud": -70.6608
+  },
+  {
+    "evento": "Circo Pastelito y Tachuela Chico",
+    "recinto": "Cenco Florida",
+    "fecha": "3 de septiembre",
+    "url_evento": "https://www.puntoticket.com/circo-pastelito",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/cir020_rs.jpg",
+    "latitud": -33.5104156,
+    "longitud": -70.6065722
+  },
+  {
+    "evento": "Solomun en Chile 2026",
+    "recinto": "Espacio Riesco",
+    "fecha": "30 de octubre 2026",
+    "url_evento": "https://www.puntoticket.com/solomun-2026",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/ptt021_rs.jpg",
+    "latitud": -33.3768,
+    "longitud": -70.6183
+  },
+  {
+    "evento": "María Becerra",
+    "recinto": "Movistar Arena",
+    "fecha": "1 de diciembre 2026",
+    "url_evento": "https://www.puntoticket.com/maria-becerra",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/ptt038_rs.jpg",
+    "latitud": -33.4625,
+    "longitud": -70.6608
+  },
+  {
+    "evento": "Beéle en Chile",
+    "recinto": "Movistar Arena",
+    "fecha": "7 de octubre de 2023",
+    "url_evento": "https://www.puntoticket.com/beele",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/mul080_rs.jpg",
+    "latitud": -33.4625,
+    "longitud": -70.6608
+  },
+  {
+    "evento": "17ª Corrida por la Vida",
+    "recinto": "Parque Bicentenario Vitacura",
+    "fecha": "25 de octubre de 2026",
+    "url_evento": "https://www.puntoticket.com/corridaporlavida",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/mok005_rs.jpg",
+    "latitud": -33.4005755,
+    "longitud": -70.6024848
+  },
+  {
+    "evento": "Pixies en Chile 2027",
+    "recinto": "Movistar Arena",
+    "fecha": "29 de marzo 2027",
+    "url_evento": "https://www.puntoticket.com/pixies",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/fna386_rs.jpg",
+    "latitud": -33.4625,
+    "longitud": -70.6608
+  },
+  {
+    "evento": "Festival Fauna Primavera",
+    "recinto": "Parque Ciudad Empresarial",
+    "fecha": "26, 27 y 28 de noviembre de 2026",
+    "url_evento": "https://www.puntoticket.com/faunaprimavera",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/ptt020_rs.jpg",
+    "latitud": -33.3853,
+    "longitud": -70.6161
+  },
+  {
+    "evento": "Fonda Doña Florinda",
+    "recinto": "Parque Los Héroes",
+    "fecha": "18, 19 y 20 de septiembre de 2026",
+    "url_evento": "https://www.puntoticket.com/dona-florinda-2026",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/jts124_rs.jpg",
+    "latitud": -41.7681302,
+    "longitud": -73.1283819
+  },
+  {
+    "evento": "Romeo Santos y Prince Royce",
+    "recinto": "Estadio Monumental",
+    "fecha": "20 de septiembre 2026",
+    "url_evento": "https://www.puntoticket.com/romeo-santos-y-prince-royce-2026",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/bsp001_rs.jpg",
+    "latitud": -33.5065,
+    "longitud": -70.6075
+  },
+  {
+    "evento": "Macha y el Bloque Depresivo",
+    "recinto": "Estadio Nacional",
+    "fecha": "11 de diciembre 2026",
+    "url_evento": "https://www.puntoticket.com/macha-y-el-bloque-depresivo",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/ulk006_rs.jpg",
+    "latitud": -33.4643,
+    "longitud": -70.6062
+  },
+  {
+    "evento": "Masters of Dirt",
+    "recinto": "Movistar Arena",
+    "fecha": "27 de septiembre 2026",
+    "url_evento": "https://www.puntoticket.com/masters-of-dirt-2026",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/wal277_rs.jpg",
+    "latitud": -33.4625,
+    "longitud": -70.6608
+  },
+  {
+    "evento": "Los Tres – Unplugged 30 Años",
+    "recinto": "Movistar Arena",
+    "fecha": "14 de noviembre 2021 21:00 hrs y 15 de noviembre 2021 20:00 hrs",
+    "url_evento": "https://www.puntoticket.com/los-tres",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/rec115_rs.jpg",
+    "latitud": -33.4625,
+    "longitud": -70.6608
+  },
+  {
+    "evento": "5 Seconds of Summer",
+    "recinto": "Movistar Arena",
+    "fecha": "22 de septiembre 2026",
+    "url_evento": "https://www.puntoticket.com/5-seconds-of-summer-santiago-de-chile-2026",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/dgm164_rs.jpg",
+    "latitud": -33.4625,
+    "longitud": -70.6608
+  },
+  {
+    "evento": "Karol G en Chile 2027",
+    "recinto": "Estadio Nacional",
+    "fecha": "28, 29, 30 y 31 de enero de 2027",
+    "url_evento": "https://www.puntoticket.com/karol-g",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/biz378_rs.jpg",
+    "latitud": -33.4643,
+    "longitud": -70.6062
+  },
+  {
+    "evento": "Aitana en Chile 2026",
+    "recinto": "Movistar Arena",
+    "fecha": "19 de octubre 2026",
+    "url_evento": "https://www.puntoticket.com/aitana",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/biz375_rs.jpg",
+    "latitud": -33.4625,
+    "longitud": -70.6608
+  },
+  {
+    "evento": "Def Leppard",
+    "recinto": "Movistar Arena",
+    "fecha": "8 de noviembre 2026",
+    "url_evento": "https://www.puntoticket.com/def-leppard",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/rec113_rs.jpg",
+    "latitud": -33.4625,
+    "longitud": -70.6608
+  },
+  {
+    "evento": "Undertale: The Determination Symphony",
+    "recinto": "Teatro Coliseo",
+    "fecha": "6 de marzo 2027",
+    "url_evento": "https://www.puntoticket.com/undertale-symphony",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/cco115_rs.jpg",
+    "latitud": -33.4445,
+    "longitud": -70.6537
+  },
+  {
+    "evento": "The Grid: Outworld",
+    "recinto": "Santiago",
+    "fecha": "5 de septiembre 2026",
+    "url_evento": "https://www.puntoticket.com/the-grid-outworld",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/glo200_rs.jpg",
+    "latitud": -33.4376995,
+    "longitud": -70.6510671
+  },
+  {
+    "evento": "Deep Purple",
+    "recinto": "Movistar Arena",
+    "fecha": "8 de diciembre 2026",
+    "url_evento": "https://www.puntoticket.com/deep-purple",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/rec112_rs.jpg",
+    "latitud": -33.4625,
+    "longitud": -70.6608
+  },
+  {
+    "evento": "Maná en Chile 2026",
+    "recinto": "Estadio Monumental",
+    "fecha": "5 de diciembre 2026",
+    "url_evento": "https://www.puntoticket.com/mana",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/ptt031_rs.jpg",
+    "latitud": -33.5065,
+    "longitud": -70.6075
+  },
+  {
+    "evento": "Freen Sarocha | Velvet Dream Dawn en Chile 2026",
+    "recinto": "Cúpula Parque O'Higgins",
+    "fecha": "8 de noviembre 2026",
+    "url_evento": "https://www.puntoticket.com/freen-sarocha",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/eff032_rs.jpg",
+    "latitud": -33.4658,
+    "longitud": -70.6601
+  },
+  {
+    "evento": "Lucho Mellera en Chile 2027",
+    "recinto": "Movistar Arena",
+    "fecha": "11 de abril 2027",
+    "url_evento": "https://www.puntoticket.com/lucho-mellera",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/rds105_rs.jpg",
+    "latitud": -33.4625,
+    "longitud": -70.6608
+  },
+  {
+    "evento": "La Cava - Jumbo",
+    "recinto": "Jardines El Mercurio Vitacura",
+    "fecha": "7, 8 y 9 de noviembre 2026",
+    "url_evento": "https://www.puntoticket.com/la-cava-jumbo",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/glo209_rs.jpg",
+    "latitud": -33.3823723,
+    "longitud": -70.593399
+  },
+  {
+    "evento": "Marco Antonio Solís",
+    "recinto": "Movistar Arena",
+    "fecha": "3 y 4 de noviembre 2026",
+    "url_evento": "https://www.puntoticket.com/marco-antonio-solis",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/swg170_rs.jpg",
+    "latitud": -33.4625,
+    "longitud": -70.6608
+  },
+  {
+    "evento": "Jamiroquai",
+    "recinto": "Claro Arena",
+    "fecha": "15 de septiembre 2026",
+    "url_evento": "https://www.puntoticket.com/jamiroquai-2026",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/lot221_rs.jpg",
+    "latitud": -33.3981,
+    "longitud": -70.5361
+  },
+  {
+    "evento": "Aespa en Chile 2026",
+    "recinto": "Movistar Arena",
+    "fecha": "6 de septiembre 2026",
+    "url_evento": "https://www.puntoticket.com/aespa-live-scl-2026",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/ptt017_rs.jpg",
+    "latitud": -33.4625,
+    "longitud": -70.6608
+  },
+  {
+    "evento": "Eros Ramazzotti en Movistar Arena",
+    "recinto": "Movistar Arena",
+    "fecha": "03 de noviembre 2027",
+    "url_evento": "https://www.puntoticket.com/eros-ramazzotti",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/mul074_rs.jpg",
+    "latitud": -33.4625,
+    "longitud": -70.6608
+  },
+  {
+    "evento": "Soy Luna Tour: El Último Show",
+    "recinto": "Movistar Arena",
+    "fecha": "22 de noviembre de 2026",
+    "url_evento": "https://www.puntoticket.com/soy-luna-ultimo-show-2026",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/wal281_rs.jpg",
+    "latitud": -33.4625,
+    "longitud": -70.6608
+  },
+  {
+    "evento": "Porfi Baloa y sus Adolescentes",
+    "recinto": "Teatro Caupolicán",
+    "fecha": "17 de septiembre 2026",
+    "url_evento": "https://www.puntoticket.com/porfi-baloa-y-sus-adolescentes-2026",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/ltc033_rs.jpg",
+    "latitud": -33.4542,
+    "longitud": -70.6534
+  },
+  {
+    "evento": "Motor Clásica",
+    "recinto": "Club Hípico de Santiago",
+    "fecha": "03 y 04 de octubre de 2026",
+    "url_evento": "https://www.puntoticket.com/motor-clasica-2026",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/lve001_rs.jpg",
+    "latitud": -33.4639182,
+    "longitud": -70.6685993
+  },
+  {
+    "evento": "Anyma en Chile 2026",
+    "recinto": "Espacio Riesco",
+    "fecha": "31 de diciembre 2026",
+    "url_evento": "https://www.puntoticket.com/anyma-2026",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/xim001_rs.jpg",
+    "latitud": -33.3768,
+    "longitud": -70.6183
+  },
+  {
+    "evento": "Cumbre Guachaca La Cuarta 2026",
+    "recinto": "Los Buenos Muchachos, Avenida Ricardo Cumming 1031, Santiago",
+    "fecha": "5 y 6 de septiembre 2026",
+    "url_evento": "https://www.puntoticket.com/cumbre-guachaca-2026",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/gcs001_rs.jpg",
+    "latitud": -33.4325688,
+    "longitud": -70.6689009
+  },
+  {
+    "evento": "Gondwana & Quique Neira en Chile 2026",
+    "recinto": "Estadio Bicentenario La Florida",
+    "fecha": "5 de septiembre 2026",
+    "url_evento": "https://www.puntoticket.com/gondwana-quiqueneira-reunion",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/rep001_rs.jpg",
+    "latitud": -33.5358,
+    "longitud": -70.5786
+  },
+  {
+    "evento": "Feria Bocas Moradas",
+    "recinto": "Polo Apoquindo",
+    "fecha": "5 y 6 de septiembre 2026",
+    "url_evento": "https://www.puntoticket.com/feria-bocas-moradas-sept-2026",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/glo207_rs.jpg",
+    "latitud": -33.4110447,
+    "longitud": -70.5725804
+  },
+  {
+    "evento": "Respira Primavera Open Air",
+    "recinto": "Espacio Riesco",
+    "fecha": "21 y 22 de noviembre de 2026",
+    "url_evento": "https://www.puntoticket.com/festival-primavera-2026",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/sou068_rs.jpg",
+    "latitud": -33.3768,
+    "longitud": -70.6183
+  },
+  {
+    "evento": "Ha*Ash | No Me Hablen De Amor Tour",
+    "recinto": "Movistar Arena",
+    "fecha": "21 de marzo de 2027",
+    "url_evento": "https://www.puntoticket.com/ha-ash",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/biz391_rs.jpg",
+    "latitud": -33.4625,
+    "longitud": -70.6608
+  },
+  {
+    "evento": "Cirque du Soleil: ALEGRIA",
+    "recinto": "Gran Carpa Espacio Riesco",
+    "fecha": "6 al 31 de enero 2027",
+    "url_evento": "https://www.puntoticket.com/cirque-du-soleil-alegria",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/ipr002_rs.jpg",
+    "latitud": -33.3768,
+    "longitud": -70.6183
+  },
+  {
+    "evento": "The Gathering",
+    "recinto": "Movistar Arena",
+    "fecha": "17 de octubre 2026",
+    "url_evento": "https://www.puntoticket.com/the-gathering-2026",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/rec101_rs.jpg",
+    "latitud": -33.4625,
+    "longitud": -70.6608
+  },
+  {
+    "evento": "Edo Caroe",
+    "recinto": "Movistar Arena",
+    "fecha": "27 y 28 de noviembre 2021, 29 de noviembre 2021",
+    "url_evento": "https://www.puntoticket.com/edocaroe-movistar-arena",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/ptt026_rs.jpg",
+    "latitud": -33.4625,
+    "longitud": -70.6608
+  },
+  {
+    "evento": "The Grid: KI/KI 5 Hours",
+    "recinto": "Espacio Riesco",
+    "fecha": "5 de diciembre 2023",
+    "url_evento": "https://www.puntoticket.com/the-grid-kiki-5hours",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/glo203_rs.jpg",
+    "latitud": -33.3768,
+    "longitud": -70.6183
+  },
+  {
+    "evento": "El Mundo de Fede Vigevani en Chile 2026",
+    "recinto": "Claro Arena",
+    "fecha": "19 de diciembre 2026",
+    "url_evento": "https://www.puntoticket.com/fede-vigevani-2026",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/lot230_rs.jpg",
+    "latitud": -33.3981,
+    "longitud": -70.5361
+  },
+  {
+    "evento": "Fonda Doña Rosa",
+    "recinto": "Hipódromo Chile",
+    "fecha": "18 y 20 de septiembre de 2026",
+    "url_evento": "https://www.puntoticket.com/dona-rosa-2026",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/jts125_rs.jpg",
+    "latitud": -33.4041507,
+    "longitud": -70.6664968
+  },
+  {
+    "evento": "Morat",
+    "recinto": "Movistar Arena",
+    "fecha": "8, 9, 10, 14, 15 y 16 de septiembre de 2023",
+    "url_evento": "https://www.puntoticket.com/morat",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/biz369_rs.jpg",
+    "latitud": -33.4625,
+    "longitud": -70.6608
+  },
+  {
+    "evento": "Katteyes",
+    "recinto": "Movistar Arena",
+    "fecha": "19 de noviembre 2026",
+    "url_evento": "https://www.puntoticket.com/katteyes-live-scl-2026",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/dgm180_rs.jpg",
+    "latitud": -33.4625,
+    "longitud": -70.6608
+  },
+  {
+    "evento": "Creamfields Chile 2026",
+    "recinto": "Club Hípico de Santiago",
+    "fecha": "14 y 15 de noviembre 2026",
+    "url_evento": "https://www.puntoticket.com/creamfields-2026",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/ptt018_rs.jpg",
+    "latitud": -33.4639182,
+    "longitud": -70.6685993
+  },
+  {
+    "evento": "Alanys Lagos en Chile 2026",
+    "recinto": "Teatro Caupolicán",
+    "fecha": "15 de noviembre 2026",
+    "url_evento": "https://www.puntoticket.com/alanys-lagos-mi-primer-caupolican-2026",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/axx001_rs.jpg",
+    "latitud": -33.4542,
+    "longitud": -70.6534
+  },
+  {
+    "evento": "Helloween",
+    "recinto": "Movistar Arena",
+    "fecha": "11 de septiembre 2026",
+    "url_evento": "https://www.puntoticket.com/helloween",
+    "imagen_url": "https://static.ptocdn.net/images/eventos/rec107_rs.jpg",
+    "latitud": -33.4625,
+    "longitud": -70.6608
+  }
+]
