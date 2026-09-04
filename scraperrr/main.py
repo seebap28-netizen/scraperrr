@@ -1,7 +1,10 @@
 import json
 import re
 import time
-from urllib.parse import urljoin
+import unicodedata
+from datetime import date, datetime
+from urllib.parse import urljoin, urlparse, urlunparse
+from zoneinfo import ZoneInfo
 from bs4 import BeautifulSoup
 from geopy.geocoders import Nominatim
 from playwright.sync_api import sync_playwright
@@ -21,6 +24,42 @@ _coords_cache = {}
 
 TICKETPLUS_BASE = "https://ticketplus.cl"
 TICKETPLUS_EVENTS_URL = f"{TICKETPLUS_BASE}/es/events/more_events.json"
+
+MESES = {
+    "enero": 1,
+    "ene": 1,
+    "febrero": 2,
+    "feb": 2,
+    "marzo": 3,
+    "mar": 3,
+    "abril": 4,
+    "abr": 4,
+    "mayo": 5,
+    "may": 5,
+    "junio": 6,
+    "jun": 6,
+    "julio": 7,
+    "jul": 7,
+    "agosto": 8,
+    "ago": 8,
+    "septiembre": 9,
+    "setiembre": 9,
+    "sep": 9,
+    "sept": 9,
+    "octubre": 10,
+    "oct": 10,
+    "noviembre": 11,
+    "nov": 11,
+    "diciembre": 12,
+    "dic": 12,
+}
+
+
+def hoy_chile():
+    try:
+        return datetime.now(ZoneInfo("America/Santiago")).date()
+    except Exception:
+        return datetime.now().date()
 
 RECINTOS_CONOCIDOS = {
     "estadio nacional": (-33.4643, -70.6062),
@@ -78,15 +117,306 @@ def obtener_coordenadas(recinto):
     return None, None
 
 
+def _como_lista(valor):
+    if valor is None:
+        return []
+    if isinstance(valor, list):
+        return valor
+    return [valor]
+
+
+def normalizar_precio(valor):
+    if valor is None or valor == "" or valor == "No especificado":
+        return "No especificado"
+    if isinstance(valor, bool):
+        return "No especificado"
+    if isinstance(valor, (int, float)):
+        if valor <= 0:
+            return "No especificado"
+        return int(valor)
+    digitos = re.sub(r"[^\d]", "", str(valor))
+    if not digitos:
+        return "No especificado"
+    numero = int(digitos)
+    if numero <= 0:
+        return "No especificado"
+    return numero
+
+
+def _precios_de_ofertas(ofertas):
+    precios = []
+    for oferta in _como_lista(ofertas):
+        if not isinstance(oferta, dict):
+            continue
+        for clave in ("lowPrice", "highPrice", "price"):
+            valor = oferta.get(clave)
+            if valor is None or valor == "":
+                continue
+            normalizado = normalizar_precio(valor)
+            if normalizado != "No especificado":
+                precios.append(normalizado)
+        precios.extend(_precios_de_ofertas(oferta.get("offers")))
+    return precios
+
+
+def extraer_precio_desde_html(soup):
+    precios = []
+    for script in soup.find_all("script", type="application/ld+json"):
+        if not script.string:
+            continue
+        try:
+            data = json.loads(script.string.strip())
+        except json.JSONDecodeError:
+            continue
+        for nodo in _como_lista(data):
+            if not isinstance(nodo, dict):
+                continue
+            items = _como_lista(nodo.get("@graph")) if nodo.get("@graph") else [nodo]
+            for item in items:
+                if isinstance(item, dict):
+                    precios.extend(_precios_de_ofertas(item.get("offers")))
+    if precios:
+        return min(precios)
+
+    texto = soup.get_text(" ", strip=True)
+    candidatos = []
+    for match in re.findall(r"(?:desde\s*)?\$\s*([\d.]+)", texto, re.I):
+        normalizado = normalizar_precio(match)
+        if normalizado != "No especificado" and 1000 <= normalizado <= 10_000_000:
+            candidatos.append(normalizado)
+    if candidatos:
+        return min(candidatos)
+    return "No especificado"
+
+
+def _sin_acentos(texto):
+    nfkd = unicodedata.normalize("NFKD", texto or "")
+    return "".join(c for c in nfkd if not unicodedata.combining(c))
+
+
+def _mes_a_numero(nombre):
+    clave = _sin_acentos(nombre).lower().strip(".,")
+    return MESES.get(clave)
+
+
+def parsear_fechas(texto):
+    if not texto or texto in ("No especificado", "No disponible"):
+        return []
+    texto = str(texto).strip()
+    hoy = hoy_chile()
+    encontradas = []
+
+    for match in re.finditer(
+        r"(\d{4})-(\d{2})-(\d{2})(?:[T\s]\d{2}:\d{2})?", texto
+    ):
+        encontradas.append(
+            date(int(match.group(1)), int(match.group(2)), int(match.group(3)))
+        )
+
+    for match in re.finditer(
+        r"(\d{1,2})\s+y\s+(\d{1,2})\s+de\s+([A-Za-zÁÉÍÓÚáéíóúñÑ]+)(?:\s+de)?\s+(\d{4})",
+        texto,
+        re.I,
+    ):
+        mes = _mes_a_numero(match.group(3))
+        anio = int(match.group(4))
+        if mes:
+            for dia in (int(match.group(1)), int(match.group(2))):
+                try:
+                    encontradas.append(date(anio, mes, dia))
+                except ValueError:
+                    continue
+
+    for match in re.finditer(
+        r"(\d{1,2})\s+de\s+([A-Za-zÁÉÍÓÚáéíóúñÑ]+)(?:\s+de)?\s+(\d{4})",
+        texto,
+        re.I,
+    ):
+        mes = _mes_a_numero(match.group(2))
+        if not mes:
+            continue
+        try:
+            encontradas.append(
+                date(int(match.group(3)), mes, int(match.group(1)))
+            )
+        except ValueError:
+            continue
+
+    if not encontradas:
+        for match in re.finditer(
+            r"(\d{1,2})\s+de\s+([A-Za-zÁÉÍÓÚáéíóúñÑ]+)\b", texto, re.I
+        ):
+            mes = _mes_a_numero(match.group(2))
+            if not mes:
+                continue
+            try:
+                encontradas.append(date(hoy.year, mes, int(match.group(1))))
+            except ValueError:
+                continue
+
+    if not encontradas:
+        for match in re.finditer(
+            r"\b(\d{1,2})\s+([A-Za-zÁÉÍÓÚáéíóúñÑ]{3,})\b", texto
+        ):
+            mes = _mes_a_numero(match.group(2))
+            if not mes:
+                continue
+            try:
+                encontradas.append(date(hoy.year, mes, int(match.group(1))))
+            except ValueError:
+                continue
+
+    unicas = []
+    vistos = set()
+    for f in encontradas:
+        if f not in vistos:
+            vistos.add(f)
+            unicas.append(f)
+    return unicas
+
+
+def extraer_fechas_desde_html(soup):
+    fechas = []
+    for script in soup.find_all("script", type="application/ld+json"):
+        if not script.string:
+            continue
+        try:
+            data = json.loads(script.string.strip())
+        except json.JSONDecodeError:
+            continue
+        for nodo in _como_lista(data):
+            if not isinstance(nodo, dict):
+                continue
+            items = _como_lista(nodo.get("@graph")) if nodo.get("@graph") else [nodo]
+            for item in items:
+                if not isinstance(item, dict):
+                    continue
+                for clave in ("startDate", "endDate"):
+                    fechas.extend(parsear_fechas(item.get(clave)))
+    return fechas
+
+
+def fecha_referencia_evento(evento):
+    fechas = parsear_fechas(evento.get("fecha"))
+    fechas.extend(evento.get("_fechas_schema") or [])
+    if not fechas:
+        return None
+    return max(fechas)
+
+
+def evento_ya_paso(evento, hoy=None):
+    if hoy is None:
+        hoy = hoy_chile()
+    ref = fecha_referencia_evento(evento)
+    if ref is None:
+        return False
+    return ref < hoy
+
+
+def normalizar_url_evento(url):
+    if not url:
+        return ""
+    parsed = urlparse(url.strip())
+    path = parsed.path.rstrip("/").lower()
+    return urlunparse(
+        (parsed.scheme.lower(), parsed.netloc.lower(), path, "", "", "")
+    )
+
+
+def _texto_clave(valor):
+    texto = _sin_acentos(valor or "").lower()
+    texto = re.sub(r"[^a-z0-9\s]", " ", texto)
+    return re.sub(r"\s+", " ", texto).strip()
+
+
+def clave_duplicado(evento):
+    url = normalizar_url_evento(evento.get("url_evento"))
+    nombre = _texto_clave(evento.get("evento"))
+    recinto = _texto_clave(
+        (evento.get("recinto") or "").split(",")[0].split(" - ")[0]
+    )
+    ref = fecha_referencia_evento(evento)
+    fecha_key = ref.isoformat() if ref else _texto_clave(evento.get("fecha"))
+    huella = None
+    if nombre and nombre != "no especificado":
+        huella = (nombre, fecha_key, recinto)
+    return url, huella
+
+
+def _calidad_evento(evento):
+    score = 0
+    if evento.get("precio") not in (None, "", "No especificado"):
+        score += 2
+    if evento.get("imagen_url") not in (None, "", "No disponible"):
+        score += 1
+    if evento.get("latitud") not in (None, ""):
+        score += 1
+    if evento.get("fecha") not in (None, "", "No especificado"):
+        score += 1
+    return score
+
+
+def filtrar_eventos(eventos):
+    hoy = hoy_chile()
+    vigentes = []
+    descartados_pasados = 0
+    for evento in eventos:
+        if evento_ya_paso(evento, hoy):
+            descartados_pasados += 1
+            continue
+        vigentes.append(evento)
+
+    unicos = []
+    por_url = {}
+    por_huella = {}
+    duplicados = 0
+
+    for evento in vigentes:
+        url, huella = clave_duplicado(evento)
+        idx_existente = None
+        if url and url in por_url:
+            idx_existente = por_url[url]
+        elif huella and huella in por_huella:
+            idx_existente = por_huella[huella]
+
+        if idx_existente is not None:
+            duplicados += 1
+            actual = unicos[idx_existente]
+            if _calidad_evento(evento) > _calidad_evento(actual):
+                unicos[idx_existente] = evento
+                if url:
+                    por_url[url] = idx_existente
+                if huella:
+                    por_huella[huella] = idx_existente
+            continue
+
+        idx = len(unicos)
+        unicos.append(evento)
+        if url:
+            por_url[url] = idx
+        if huella:
+            por_huella[huella] = idx
+
+    print(
+        f"Filtro: {descartados_pasados} eventos pasados y {duplicados} duplicados descartados."
+    )
+    return unicos
+
+
+def limpiar_evento(evento):
+    return {k: v for k, v in evento.items() if not str(k).startswith("_")}
+
+
 def extraer_datos_evento_con_ollama(texto_pagina, url_evento):
     system_prompt = (
         "Eres un extractor de datos de eventos preciso. Tu objetivo es leer el texto de la página de un evento "
         "y extraer la información clave.\n"
         "REGLAS:\n"
-        "1. Identifica el nombre del evento principal, la fecha exacta y el lugar/recinto.\n"
+        "1. Identifica el nombre del evento principal, la fecha exacta, el lugar/recinto y el precio más bajo.\n"
         "2. Si la fecha contiene días y mes (ej: '28 de Febrero 2027', '24 de Octubre 2026'), extráela completa.\n"
-        "3. Si no encuentras un dato explícito, escribe 'No especificado'.\n"
-        "4. Responde ÚNICAMENTE en formato JSON plano (sin bloques ```json)."
+        "3. El precio debe ser el valor más bajo en CLP, solo números (ej: 23000). Si dice 'Desde $23.000', usa 23000.\n"
+        "4. Si no encuentras un dato explícito, escribe 'No especificado'.\n"
+        "5. Responde ÚNICAMENTE en formato JSON plano (sin bloques ```json)."
     )
 
     user_prompt = f"""
@@ -98,7 +428,8 @@ def extraer_datos_evento_con_ollama(texto_pagina, url_evento):
     {{
       "evento": "Nombre del evento",
       "recinto": "Lugar o estadio exacto",
-      "fecha": "Fecha exacta con día, mes y año"
+      "fecha": "Fecha exacta con día, mes y año",
+      "precio": "Precio más bajo en CLP, solo número"
     }}
     """
 
@@ -125,6 +456,7 @@ def extraer_datos_evento_con_ollama(texto_pagina, url_evento):
             "evento": "No especificado",
             "recinto": "No especificado",
             "fecha": "No especificado",
+            "precio": "No especificado",
             "url_evento": url_evento,
         }
 
@@ -138,13 +470,11 @@ def obtener_eventos_ticketmaster():
         soup = BeautifulSoup(res.text, "html.parser")
         enlaces = soup.select("a[href*='/event/']")
         urls = list(
-            set(
-                [
-                    urljoin(url_base, a["href"])
-                    for a in enlaces
-                    if a.get("href")
-                ]
-            )
+            {
+                normalizar_url_evento(urljoin(url_base, a["href"]))
+                for a in enlaces
+                if a.get("href")
+            }
         )
         print(f"📦 Ticketmaster: {len(urls)} eventos encontrados.")
 
@@ -157,6 +487,11 @@ def obtener_eventos_ticketmaster():
 
                 meta_img = s.find("meta", property="og:image")
                 img_url = meta_img["content"] if meta_img else "No disponible"
+                precio_html = extraer_precio_desde_html(s)
+                fechas_schema = extraer_fechas_desde_html(s)
+                if fechas_schema and max(fechas_schema) < hoy_chile():
+                    print("  ⏭️ Evento pasado, se omite.")
+                    continue
 
                 for tag in s(["script", "style", "nav", "footer", "header"]):
                     tag.decompose()
@@ -164,6 +499,13 @@ def obtener_eventos_ticketmaster():
 
                 datos = extraer_datos_evento_con_ollama(texto, url)
                 datos["imagen_url"] = img_url
+                datos["precio"] = (
+                    precio_html
+                    if precio_html != "No especificado"
+                    else normalizar_precio(datos.get("precio"))
+                )
+                datos["fuente"] = "ticketmaster"
+                datos["_fechas_schema"] = fechas_schema
                 lat, lng = obtener_coordenadas(datos.get("recinto"))
                 datos["latitud"] = lat
                 datos["longitud"] = lng
@@ -228,7 +570,9 @@ def obtener_eventos_puntoticket():
                                 "Cliente",
                             ]
                         ):
-                            urls_descubiertas.add(urljoin(url_base, h))
+                            urls_descubiertas.add(
+                                normalizar_url_evento(urljoin(url_base, h))
+                            )
 
             urls_unicas = list(urls_descubiertas)
             print(
@@ -256,6 +600,11 @@ def obtener_eventos_puntoticket():
                         if meta_img
                         else "No disponible"
                     )
+                    precio_html = extraer_precio_desde_html(soup)
+                    fechas_schema = extraer_fechas_desde_html(soup)
+                    if fechas_schema and max(fechas_schema) < hoy_chile():
+                        print("  ⏭️ Evento pasado, se omite.")
+                        continue
 
                     for tag in soup(
                         ["script", "style", "nav", "footer", "header"]
@@ -265,6 +614,13 @@ def obtener_eventos_puntoticket():
 
                     datos = extraer_datos_evento_con_ollama(texto, url)
                     datos["imagen_url"] = img_url
+                    datos["precio"] = (
+                        precio_html
+                        if precio_html != "No especificado"
+                        else normalizar_precio(datos.get("precio"))
+                    )
+                    datos["fuente"] = "puntoticket"
+                    datos["_fechas_schema"] = fechas_schema
                     lat, lng = obtener_coordenadas(datos.get("recinto"))
                     datos["latitud"] = lat
                     datos["longitud"] = lng
@@ -318,13 +674,15 @@ def obtener_eventos_ticketplus():
 
         print(f"  📄 Página {pagina}: {len(eventos)} eventos")
         for ev in eventos:
-            url_evento = _normalizar_url_ticketplus(ev)
+            url_evento = normalizar_url_evento(_normalizar_url_ticketplus(ev))
             if not url_evento or url_evento in vistos:
                 continue
             vistos.add(url_evento)
 
             recinto = (ev.get("location") or "No especificado").strip()
             fecha = (ev.get("date") or "No especificado").strip()
+            if evento_ya_paso({"fecha": fecha}):
+                continue
             nombre = (ev.get("title") or "No especificado").strip()
             img = ev.get("img") or "No disponible"
             recinto_geo = recinto.split(" - ")[0].split(",")[0].strip()
@@ -339,7 +697,7 @@ def obtener_eventos_ticketplus():
                     "imagen_url": img,
                     "latitud": lat,
                     "longitud": lng,
-                    "precio": ev.get("price"),
+                    "precio": normalizar_precio(ev.get("price")),
                     "fuente": "ticketplus",
                 }
             )
@@ -367,6 +725,10 @@ if __name__ == "__main__":
     # 3. Scraping Ticketplus (listado JSON público de la home)
     tp_eventos = obtener_eventos_ticketplus()
     todos_los_eventos.extend(tp_eventos)
+
+    todos_los_eventos = [
+        limpiar_evento(ev) for ev in filtrar_eventos(todos_los_eventos)
+    ]
 
     # Guardar resultados
     if todos_los_eventos:
