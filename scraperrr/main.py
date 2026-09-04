@@ -17,13 +17,22 @@ HEADERS = {
 }
 
 geolocator = Nominatim(user_agent="ticket_scraper_chile_v9")
+_coords_cache = {}
+
+TICKETPLUS_BASE = "https://ticketplus.cl"
+TICKETPLUS_EVENTS_URL = f"{TICKETPLUS_BASE}/es/events/more_events.json"
 
 RECINTOS_CONOCIDOS = {
     "estadio nacional": (-33.4643, -70.6062),
     "parque estadio nacional": (-33.4643, -70.6062),
     "parque o'higgins": (-33.4658, -70.6601),
+    "parque o’higgins": (-33.4658, -70.6601),
     "movistar arena": (-33.4625, -70.6608),
     "estadio bicentenario la florida": (-33.5358, -70.5786),
+    "estadio bicentenario de la florida": (-33.5358, -70.5786),
+    "parque padre hurtado": (-33.4306, -70.5556),
+    "plaza de la ciudadanía": (-33.4445, -70.6537),
+    "estadio lucio farina": (-32.8716, -71.2479),
     "gran arena monticello": (-33.9933, -70.7011),
     "teatro caupolican": (-33.4542, -70.6534),
     "teatro caupolicán": (-33.4542, -70.6534),
@@ -45,8 +54,11 @@ def obtener_coordenadas(recinto):
     if not recinto or recinto in ["No especificado", "Ubicación no especificada"]:
         return None, None
     recinto_key = recinto.lower().strip()
+    if recinto_key in _coords_cache:
+        return _coords_cache[recinto_key]
     for key, coords in RECINTOS_CONOCIDOS.items():
         if key in recinto_key:
+            _coords_cache[recinto_key] = coords
             return coords[0], coords[1]
     recinto_limpio = re.sub(
         r"(?i)\b(de santiago de chile|jardines|centro de eventos|convention & event center)\b",
@@ -57,9 +69,12 @@ def obtener_coordenadas(recinto):
         time.sleep(1)
         location = geolocator.geocode(f"{recinto_limpio}, Chile", timeout=5)
         if location:
-            return location.latitude, location.longitude
+            coords = (location.latitude, location.longitude)
+            _coords_cache[recinto_key] = coords
+            return coords
     except Exception:
         pass
+    _coords_cache[recinto_key] = (None, None)
     return None, None
 
 
@@ -265,6 +280,79 @@ def obtener_eventos_puntoticket():
     return resultados
 
 
+def _normalizar_url_ticketplus(evento):
+    url_evento = (evento.get("url") or "").strip()
+    if url_evento:
+        return url_evento
+    slug = evento.get("id") or evento.get("name")
+    if slug:
+        return urljoin(TICKETPLUS_BASE + "/", f"events/{slug}")
+    return ""
+
+
+def obtener_eventos_ticketplus():
+    print("\n🎫 Scraping Ticketplus Chile...")
+    resultados = []
+    vistos = set()
+    pagina = 1
+    per_page = 50
+    max_paginas = 80
+
+    while pagina <= max_paginas:
+        url = f"{TICKETPLUS_EVENTS_URL}?per_page={per_page}&page={pagina}"
+        try:
+            res = requests.get(
+                url,
+                headers={**HEADERS, "Accept": "application/json"},
+                timeout=20,
+            )
+            res.raise_for_status()
+            payload = res.json()
+        except Exception as e:
+            print(f"❌ Error Ticketplus página {pagina}: {e}")
+            break
+
+        eventos = payload.get("results") or []
+        if not eventos:
+            break
+
+        print(f"  📄 Página {pagina}: {len(eventos)} eventos")
+        for ev in eventos:
+            url_evento = _normalizar_url_ticketplus(ev)
+            if not url_evento or url_evento in vistos:
+                continue
+            vistos.add(url_evento)
+
+            recinto = (ev.get("location") or "No especificado").strip()
+            fecha = (ev.get("date") or "No especificado").strip()
+            nombre = (ev.get("title") or "No especificado").strip()
+            img = ev.get("img") or "No disponible"
+            recinto_geo = recinto.split(" - ")[0].split(",")[0].strip()
+            lat, lng = obtener_coordenadas(recinto_geo or recinto)
+
+            resultados.append(
+                {
+                    "evento": nombre or "No especificado",
+                    "recinto": recinto or "No especificado",
+                    "fecha": fecha or "No especificado",
+                    "url_evento": url_evento,
+                    "imagen_url": img,
+                    "latitud": lat,
+                    "longitud": lng,
+                    "precio": ev.get("price"),
+                    "fuente": "ticketplus",
+                }
+            )
+
+        if len(eventos) < per_page:
+            break
+        pagina += 1
+        time.sleep(0.4)
+
+    print(f"📦 Ticketplus: {len(resultados)} eventos únicos.")
+    return resultados
+
+
 if __name__ == "__main__":
     todos_los_eventos = []
 
@@ -275,6 +363,10 @@ if __name__ == "__main__":
     # 2. Scraping PuntoTicket
     pt_eventos = obtener_eventos_puntoticket()
     todos_los_eventos.extend(pt_eventos)
+
+    # 3. Scraping Ticketplus (listado JSON público de la home)
+    tp_eventos = obtener_eventos_ticketplus()
+    todos_los_eventos.extend(tp_eventos)
 
     # Guardar resultados
     if todos_los_eventos:
