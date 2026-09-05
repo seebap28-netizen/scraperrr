@@ -25,6 +25,13 @@ _coords_cache = {}
 TICKETPLUS_BASE = "https://ticketplus.cl"
 TICKETPLUS_EVENTS_URL = f"{TICKETPLUS_BASE}/es/events/more_events.json"
 
+TICKETONE_BASE = "https://ticketone.cl"
+TICKETONE_API = "https://api.ticketone.cl"
+TICKETONE_EVENTS_URL = f"{TICKETONE_API}/eventos"
+
+TICKETPRO_BASE = "https://www.ticketpro.cl"
+TICKETPRO_MORE_URL = f"{TICKETPRO_BASE}/cargarMasEventos"
+
 MESES = {
     "enero": 1,
     "ene": 1,
@@ -214,6 +221,20 @@ def parsear_fechas(texto):
         )
 
     for match in re.finditer(
+        r"((?:\d{1,2}\s*,\s*)+\d{1,2}\s*y\s*\d{1,2})\s+de\s+([A-Za-zÁÉÍÓÚáéíóúñÑ]+)(?:\s+de)?\s*(\d{4})?",
+        texto,
+        re.I,
+    ):
+        mes = _mes_a_numero(match.group(2))
+        anio = int(match.group(3)) if match.group(3) else hoy.year
+        if mes:
+            for dia in (int(n) for n in re.findall(r"\d{1,2}", match.group(1))):
+                try:
+                    encontradas.append(date(anio, mes, dia))
+                except ValueError:
+                    continue
+
+    for match in re.finditer(
         r"(\d{1,2})\s+y\s+(\d{1,2})\s+de\s+([A-Za-zÁÉÍÓÚáéíóúñÑ]+)(?:\s+de)?\s+(\d{4})",
         texto,
         re.I,
@@ -228,7 +249,7 @@ def parsear_fechas(texto):
                     continue
 
     for match in re.finditer(
-        r"(\d{1,2})\s+de\s+([A-Za-zÁÉÍÓÚáéíóúñÑ]+)(?:\s+de)?\s+(\d{4})",
+        r"(\d{1,2})\s+(?:de\s+)?([A-Za-zÁÉÍÓÚáéíóúñÑ]+)(?:\s+de)?\s+(\d{4})",
         texto,
         re.I,
     ):
@@ -711,6 +732,245 @@ def obtener_eventos_ticketplus():
     return resultados
 
 
+def _imagen_ticketone(imagen):
+    if not isinstance(imagen, dict):
+        return "No disponible"
+    url = (imagen.get("url") or "").strip()
+    if not url:
+        return "No disponible"
+    if url.startswith("http"):
+        return url
+    return urljoin(TICKETONE_API + "/", url.lstrip("/"))
+
+
+def _precio_minimo_tickets(tickets):
+    precios = []
+    for ticket in tickets or []:
+        if not isinstance(ticket, dict):
+            continue
+        normalizado = normalizar_precio(ticket.get("valor"))
+        if normalizado != "No especificado":
+            precios.append(normalizado)
+    return min(precios) if precios else "No especificado"
+
+
+def _mapear_evento_ticketone(ev):
+    slug = (ev.get("slug") or "").strip()
+    url_evento = (
+        urljoin(TICKETONE_BASE + "/", f"evento/{slug}") if slug else ""
+    )
+    recinto = (ev.get("ubicacion") or ev.get("ciudad") or "No especificado").strip()
+    fecha = (ev.get("inicio") or "No especificado")
+    if isinstance(fecha, str):
+        fecha = fecha.strip()
+    else:
+        fecha = str(fecha)
+    nombre = (ev.get("titulo") or "No especificado").strip()
+    recinto_geo = recinto.split(" - ")[0].split(",")[0].strip()
+    lat, lng = obtener_coordenadas(recinto_geo or recinto)
+    return {
+        "evento": nombre or "No especificado",
+        "recinto": recinto or "No especificado",
+        "fecha": fecha or "No especificado",
+        "url_evento": normalizar_url_evento(url_evento),
+        "imagen_url": _imagen_ticketone(ev.get("imagen")),
+        "latitud": lat,
+        "longitud": lng,
+        "precio": _precio_minimo_tickets(ev.get("tickets")),
+        "fuente": "ticketone",
+    }
+
+
+def _eventos_desde_next_data(html):
+    soup = BeautifulSoup(html, "html.parser")
+    script = soup.find("script", id="__NEXT_DATA__")
+    if not script or not script.string:
+        return []
+    try:
+        data = json.loads(script.string)
+    except json.JSONDecodeError:
+        return []
+    return (
+        data.get("props", {})
+        .get("pageProps", {})
+        .get("eventos")
+        or []
+    )
+
+
+def obtener_eventos_ticketone():
+    print("\n🎫 Scraping Ticketone Chile...")
+    resultados = []
+    vistos = set()
+    eventos = []
+    limite = 100
+    inicio = 0
+    max_paginas = 40
+
+    for _ in range(max_paginas):
+        url = f"{TICKETONE_EVENTS_URL}?_limit={limite}&_start={inicio}"
+        try:
+            res = requests.get(
+                url,
+                headers={**HEADERS, "Accept": "application/json"},
+                timeout=20,
+            )
+            res.raise_for_status()
+            lote = res.json()
+        except Exception as e:
+            print(f"❌ Error Ticketone API (_start={inicio}): {e}")
+            break
+
+        if not isinstance(lote, list) or not lote:
+            break
+
+        print(f"  📄 API _start={inicio}: {len(lote)} eventos")
+        eventos.extend(lote)
+        if len(lote) < limite:
+            break
+        inicio += limite
+        time.sleep(0.3)
+
+    if not eventos:
+        print("  ↩️ API vacía, usando HTML de la home (__NEXT_DATA__)...")
+        try:
+            res = requests.get(TICKETONE_BASE, headers=HEADERS, timeout=25)
+            res.raise_for_status()
+            eventos = _eventos_desde_next_data(res.text)
+            print(f"  📄 Home: {len(eventos)} eventos")
+        except Exception as e:
+            print(f"❌ Error Ticketone home: {e}")
+            return resultados
+
+    for ev in eventos:
+        if not isinstance(ev, dict):
+            continue
+        mapeado = _mapear_evento_ticketone(ev)
+        url_evento = mapeado.get("url_evento")
+        if not url_evento or url_evento in vistos:
+            continue
+        vistos.add(url_evento)
+        if evento_ya_paso(mapeado):
+            continue
+        resultados.append(mapeado)
+
+    print(f"📦 Ticketone: {len(resultados)} eventos únicos.")
+    return resultados
+
+
+def _titulo_desde_slug_ticketpro(href):
+    path = urlparse(href).path.strip("/")
+    partes = [p for p in path.split("/") if p]
+    if len(partes) < 2:
+        return "No especificado"
+    slug = partes[-1].replace("--", " - ")
+    palabras = [p for p in slug.replace("-", " ").split() if p]
+    return " ".join(p.capitalize() for p in palabras) or "No especificado"
+
+
+def _tarjetas_html_ticketpro(html):
+    soup = BeautifulSoup(html or "", "html.parser")
+    tarjetas = soup.select("a.evento[href*='/evento/']")
+    if not tarjetas:
+        tarjetas = soup.select("a.evento-item-layout[href*='/evento/']")
+    return tarjetas
+
+
+def _mapear_tarjeta_ticketpro(enlace):
+    href = (enlace.get("href") or "").strip()
+    if not href:
+        return None
+    url_evento = normalizar_url_evento(urljoin(TICKETPRO_BASE + "/", href))
+    titulo = enlace.select_one(".item-title h3")
+    nombre = (titulo.get_text(" ", strip=True) if titulo else "") or _titulo_desde_slug_ticketpro(
+        href
+    )
+    parrafos = [
+        p.get_text(" ", strip=True)
+        for p in enlace.select(".item-title p")
+        if p.get_text(strip=True)
+    ]
+    recinto = parrafos[0] if parrafos else "No especificado"
+    fecha = parrafos[1] if len(parrafos) > 1 else "No especificado"
+    if fecha == "No especificado":
+        dia = enlace.select_one(".evento-dia")
+        mes = enlace.select_one(".evento-mes")
+        partes_fecha = [
+            (dia.get_text(strip=True) if dia else ""),
+            (mes.get_text(strip=True) if mes else ""),
+        ]
+        fecha = " ".join(p for p in partes_fecha if p) or "No especificado"
+    img = enlace.select_one("img")
+    img_url = (img.get("src") or "").strip() if img else ""
+    precio_nodo = enlace.select_one(".evento-comprar")
+    recinto_geo = recinto.split(" - ")[0].split(",")[0].strip()
+    lat, lng = obtener_coordenadas(recinto_geo or recinto)
+    return {
+        "evento": nombre or "No especificado",
+        "recinto": recinto or "No especificado",
+        "fecha": fecha or "No especificado",
+        "url_evento": url_evento,
+        "imagen_url": img_url or "No disponible",
+        "latitud": lat,
+        "longitud": lng,
+        "precio": normalizar_precio(
+            precio_nodo.get_text(" ", strip=True) if precio_nodo else None
+        ),
+        "fuente": "ticketpro",
+    }
+
+
+def obtener_eventos_ticketpro():
+    print("\n🎫 Scraping Ticketpro Chile...")
+    resultados = []
+    vistos = set()
+    offset = 0
+    paso = 30
+    max_paginas = 80
+    headers = {
+        **HEADERS,
+        "Accept": "application/json, text/javascript, */*; q=0.01",
+        "X-Requested-With": "XMLHttpRequest",
+        "Referer": TICKETPRO_BASE + "/",
+    }
+
+    for pagina in range(max_paginas):
+        url = f"{TICKETPRO_MORE_URL}/{offset}"
+        try:
+            res = requests.get(url, headers=headers, timeout=25)
+            res.raise_for_status()
+            payload = res.json()
+        except Exception as e:
+            print(f"❌ Error Ticketpro offset {offset}: {e}")
+            break
+
+        html = payload.get("html") or ""
+        tarjetas = _tarjetas_html_ticketpro(html)
+        print(f"  📄 Offset {offset}: {len(tarjetas)} eventos")
+        if not tarjetas:
+            break
+
+        for enlace in tarjetas:
+            mapeado = _mapear_tarjeta_ticketpro(enlace)
+            if not mapeado:
+                continue
+            url_evento = mapeado.get("url_evento")
+            if not url_evento or url_evento in vistos:
+                continue
+            vistos.add(url_evento)
+            if evento_ya_paso(mapeado):
+                continue
+            resultados.append(mapeado)
+
+        if not payload.get("hasMore"):
+            break
+        offset += paso
+        time.sleep(0.35)
+
+    print(f"📦 Ticketpro: {len(resultados)} eventos únicos.")
+    return resultados
+
+
 if __name__ == "__main__":
     todos_los_eventos = []
 
@@ -725,6 +985,14 @@ if __name__ == "__main__":
     # 3. Scraping Ticketplus (listado JSON público de la home)
     tp_eventos = obtener_eventos_ticketplus()
     todos_los_eventos.extend(tp_eventos)
+
+    # 4. Scraping Ticketone (API Strapi / fallback __NEXT_DATA__)
+    to_eventos = obtener_eventos_ticketone()
+    todos_los_eventos.extend(to_eventos)
+
+    # 5. Scraping Ticketpro (HTML paginado /cargarMasEventos)
+    tpro_eventos = obtener_eventos_ticketpro()
+    todos_los_eventos.extend(tpro_eventos)
 
     todos_los_eventos = [
         limpiar_evento(ev) for ev in filtrar_eventos(todos_los_eventos)
